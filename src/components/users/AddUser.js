@@ -3,7 +3,7 @@ import {useState} from 'react';
  import Card from "../UI/Card";
 import classes from './AddUser.module.css';
 import Button from "../UI/Button";
-
+import Error from '../UI/Error';
 
 function AddUser(props){
     const[enteredUname,setEnteredUname] =useState('');
@@ -32,17 +32,20 @@ function AddUser(props){
         setEnteredAge(event.target.value);
     }
     return (
-        <Card className={classes.input}>
-            <form onSubmit={addUserHandler}>
-                <label htmlFor="username">Username :</label>
-                <input id="username" type="text" value={enteredUname} onChange={changeHandler} />
+        <div>
+            <Error title="An error occured!" message="Something went wrong!" />
+            <Card className={classes.input}>
+                <form onSubmit={addUserHandler}>
+                    <label htmlFor="username">Username :</label>
+                    <input id="username" type="text" value={enteredUname} onChange={changeHandler} />
 
-                <label htmlFor="age">Age(Years) :</label>
-                <input id="age" type="number" value={enteredAge} onChange={ageChangeHandler} />
+                    <label htmlFor="age">Age(Years) :</label>
+                    <input id="age" type="number" value={enteredAge} onChange={ageChangeHandler} />
 
-                <Button type="submit" >Add User</Button>
-            </form>
-        </Card>
+                    <Button type="submit" >Add User</Button>
+                </form>
+            </Card>
+        </div>
         
     )
 };
