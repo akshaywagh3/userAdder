@@ -8,32 +8,42 @@ import Error from '../UI/Error';
 function AddUser(props){
     const[enteredUname,setEnteredUname] =useState('');
     const[enteredAge,setEnteredAge]=useState('');
+    const[error,setError]=useState();
 
     const addUserHandler = (event)=>{
         event.preventDefault();
         if(enteredAge.trim().length ===0 || enteredUname.trim().length===0){
+            setError({
+                title: "invalid Input",
+                message: "Please Enter valid name and age"
+            });
             return;
         }
         if(+enteredAge<1){
+            setError({
+                title: "invalid Input",
+                message: "Please Enter valid  age (>0)"
+            });
             return;
         }
         
         props.onAddUser(enteredUname,enteredAge);
         setEnteredUname('');
         setEnteredAge('');
-        
-
     }
+    const myErrorHandler =()=>{
+        setError(null);
+    };
     function changeHandler (event){
         setEnteredUname(event.target.value);
         
-    }
+    };
     function ageChangeHandler (event){
         setEnteredAge(event.target.value);
-    }
+    };
     return (
         <div>
-            <Error title="An error occured!" message="Something went wrong!" />
+            {error && <Error title={Error.title} message={error.message} onConfirm={myErrorHandler}/>}
             <Card className={classes.input}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="username">Username :</label>
